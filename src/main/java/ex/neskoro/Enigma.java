@@ -37,20 +37,12 @@ public class Enigma {
         StringBuilder delimiter = new StringBuilder();
         StringBuilder stateBuilder = new StringBuilder();
         for (Rotor rotor : rotors) {
-            rotorBuilder.append(rotorCount++).append("|");
+            rotorBuilder.append(rotorCount).append("|");
             delimiter.append("--");
             stateBuilder.append(rotor.getState()).append("|");
         }
         return rotorBuilder.append("\n")
                 .append(delimiter.append("\n"))
                 .append(stateBuilder).toString();
-    }
-
-    public void exportState() {
-
-    }
-
-    public void importState() {
-
     }
 }
