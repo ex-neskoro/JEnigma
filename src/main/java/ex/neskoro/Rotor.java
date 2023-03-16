@@ -10,6 +10,8 @@ public class Rotor {
     private Language language;
     private HashMap<String, String> map;
 
+    // TODO add inverse map
+
     public Rotor(Language language) {
         this.language = language;
         map = new HashMap<>();
@@ -51,5 +53,28 @@ public class Rotor {
 
     public void setState(int state) {
         this.state = state % language.getSize();
+    }
+
+    public String returnCsvState() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(state);
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            sb.append(",");
+            sb.append(entry.getValue());
+        }
+        return sb.toString();
+    }
+
+    public void importState(String csvState) {
+        String[] stateArr = csvState.split(",");
+        setState(Integer.parseInt(stateArr[0]));
+
+        Set<Map.Entry<String, String>> entrySet = map.entrySet();
+        Iterator<Map.Entry<String, String>> iterator = entrySet.iterator();
+
+        for (int i = 1; i < stateArr.length; i++) {
+            Map.Entry<String, String> entry = iterator.next();
+            map.replace(entry.getKey(), stateArr[i]);
+        }
     }
 }

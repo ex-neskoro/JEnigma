@@ -1,6 +1,7 @@
 package ex.neskoro;
 
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Enigma {
     private Language language;
@@ -44,5 +45,22 @@ public class Enigma {
         return rotorBuilder.append("\n")
                 .append(delimiter.append("\n"))
                 .append(stateBuilder).toString();
+    }
+
+    public void exportState() {
+        StringBuilder sb = new StringBuilder();
+        for (Rotor rotor : rotors) {
+            sb.append(rotor.returnCsvState());
+            sb.append("\n");
+        }
+        System.out.println(sb);
+    }
+
+    public void importState() {
+        Scanner sc = new Scanner(System.in);
+
+        for (Rotor rotor : rotors) {
+            rotor.importState(sc.nextLine());
+        }
     }
 }

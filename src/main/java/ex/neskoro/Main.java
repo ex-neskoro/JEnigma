@@ -5,7 +5,5 @@ public class Main {
         System.out.println("Hello, Enigma!\n");
 //        Enigma enigma = new Enigma(new RuLanguage(), 4);
         Enigma enigma = new Enigma(new EnLanguage(), 3);
-        System.out.println(enigma);
-        System.out.println(enigma.getRotorsState());
     }
 }
