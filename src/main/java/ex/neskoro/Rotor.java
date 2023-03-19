@@ -18,6 +18,8 @@ public class Rotor {
     public Rotor(Language language) {
         this.language = language;
 
+        state = new Random().nextInt(language.getSize());
+
         map = new HashMap<>();
         mapInit();
 
