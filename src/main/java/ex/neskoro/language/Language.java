@@ -1,4 +1,4 @@
-package ex.neskoro;
+package ex.neskoro.language;
 
 public abstract class Language {
     protected int size;

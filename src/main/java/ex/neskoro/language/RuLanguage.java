@@ -1,4 +1,4 @@
-package ex.neskoro;
+package ex.neskoro.language;
 
 public class RuLanguage extends Language {
     public RuLanguage() {
