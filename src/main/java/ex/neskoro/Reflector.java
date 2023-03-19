@@ -2,56 +2,68 @@ package ex.neskoro;
 
 import ex.neskoro.language.Language;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Reflector {
 
     private Language language;
-    private Map<String, String> map;
+    private Map<String, Integer> map;
+    private ArrayList<String> inList;
 
     public Reflector(Language language) {
         this.language = language;
+        inListInit();
         initMap();
     }
 
     // TODO add random initialization -> any Language init
     // Reflector A - https://en.wikipedia.org/wiki/Enigma_rotor_details
+    private void inListInit() {
+        inList = new ArrayList<>();
+        inList.add("e");
+        inList.add("j");
+        inList.add("m");
+        inList.add("z");
+        inList.add("a");
+        inList.add("l");
+        inList.add("y");
+        inList.add("x");
+        inList.add("v");
+        inList.add("b");
+        inList.add("w");
+        inList.add("f");
+        inList.add("c");
+        inList.add("r");
+        inList.add("q");
+        inList.add("u");
+        inList.add("o");
+        inList.add("n");
+        inList.add("t");
+        inList.add("s");
+        inList.add("p");
+        inList.add("i");
+        inList.add("k");
+        inList.add("h");
+        inList.add("g");
+        inList.add("d");
+    }
+
     private void initMap() {
         map = new HashMap<>();
-        map.put("a", "e");
-        map.put("b", "j");
-        map.put("c", "m");
-        map.put("d", "z");
-        map.put("e", "a");
-        map.put("f", "l");
-        map.put("g", "y");
-        map.put("h", "x");
-        map.put("i", "v");
-        map.put("j", "b");
-        map.put("k", "w");
-        map.put("l", "f");
-        map.put("m", "c");
-        map.put("n", "r");
-        map.put("o", "q");
-        map.put("p", "u");
-        map.put("q", "o");
-        map.put("r", "n");
-        map.put("s", "t");
-        map.put("t", "s");
-        map.put("u", "p");
-        map.put("v", "i");
-        map.put("w", "k");
-        map.put("x", "h");
-        map.put("y", "g");
-        map.put("z", "d");
+        int i = 0;
+        for (String s : language.getAlphabet().split("")) {
+            map.put(s, i++);
+        }
     }
 
     public String getCsvState() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            stringBuilder.append(entry.getValue());
+        for (String str : inList) {
+            stringBuilder.append(str);
             stringBuilder.append(",");
         }
 
@@ -60,16 +72,20 @@ public class Reflector {
         return stringBuilder.toString();
     }
 
-    public String process(String s) {
-        return map.get(s);
+    public String process(String s, int lastRotorState) {
+        int index = map.get(s);
+
+        int tempIndex = index - lastRotorState;
+
+        if (tempIndex < 0) {
+            tempIndex += language.getSize() - 1;
+        }
+
+        return inList.get(tempIndex % (language.getSize() - 1));
     }
 
     public void importState(String csvLine) {
         String[] state = csvLine.split(",");
-
-        int i = 0;
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            map.put(entry.getKey(), state[i++]);
-        }
+        inList = new ArrayList<>(List.of(state));
     }
 }

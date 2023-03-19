@@ -1,5 +1,6 @@
 package ex.neskoro;
 
+import ex.neskoro.language.EnLanguage;
 import ex.neskoro.language.Language;
 
 import java.util.*;
@@ -10,15 +11,15 @@ public class Rotor {
     // for en: 0 - 25
     // for ru: 0 - 32
     private int state;
-    private final Language language;
-    private final HashMap<String, Integer> map;
-    private ArrayList<String> inList;
+    protected final Language language;
+    protected final HashMap<String, Integer> map;
+    protected ArrayList<String> inList;
     private ArrayList<String> outList;
 
-    public Rotor(Language language) {
+    public Rotor(Language language, int initState) {
         this.language = language;
 
-        state = new Random().nextInt(language.getSize());
+        state = initState;
 
         map = new HashMap<>();
         mapInit();
@@ -28,6 +29,14 @@ public class Rotor {
         outListInit();
     }
 
+    public Rotor(Language language) {
+        this(language, new Random().nextInt(language.getSize()));
+    }
+
+    public Rotor() {
+        this(new EnLanguage());
+    }
+
     private void mapInit() {
         int i = 0;
         for (String s : language.getAlphabet().split("")) {
@@ -35,7 +44,7 @@ public class Rotor {
         }
     }
 
-    private void inListInit() {
+    protected void inListInit() {
         inList = new ArrayList<>(List.of(language.getAlphabet().split("")));
         Collections.shuffle(inList);
     }
@@ -105,20 +114,32 @@ public class Rotor {
     }
 
     public int turn() {
-        state = ++state % language.getSize();
+        state = ++state % (language.getSize() - 1);
         return state;
     }
 
-    public String processLetterIn(String s) {
+    public String processLetterIn(String s, int prevRotorState) {
         int index = map.get(s);
-        s = inList.get((index + state) % language.getSize());
+
+        int tempIndex = index + state - prevRotorState;
+        if (tempIndex < 0) {
+            tempIndex += language.getSize() - 1;
+        }
+
+        s = inList.get((tempIndex) % (language.getSize() - 1));
 
         return s;
     }
 
-    public String processLetterOut(String s) {
+    public String processLetterOut(String s, int prevRotorState) {
         int index = map.get(s);
-        s = outList.get((index + state) % language.getSize());
+
+        int tempIndex = index + state - prevRotorState;
+        if (tempIndex < 0) {
+            tempIndex += language.getSize() - 1;
+        }
+
+        s = inList.get((tempIndex) % (language.getSize() - 1));
 
         return s;
     }

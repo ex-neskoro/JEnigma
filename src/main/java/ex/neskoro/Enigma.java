@@ -1,5 +1,6 @@
 package ex.neskoro;
 
+import ex.neskoro.language.EnLanguage;
 import ex.neskoro.language.Language;
 
 import java.util.Iterator;
@@ -10,6 +11,8 @@ public class Enigma {
     private Language language;
     private LinkedList<Rotor> rotors;
     private Reflector reflector;
+
+    private Rotor staticRotor = new OneToOneRotor();
 
     public Enigma(Language language, int rotorCount) {
         if (rotorCount > 15) {
@@ -23,6 +26,10 @@ public class Enigma {
         }
 
         reflector = new Reflector(language);
+    }
+
+    public Enigma() {
+        this(new EnLanguage(), 3);
     }
 
     public String processString(String string) {
@@ -47,7 +54,10 @@ public class Enigma {
     // TODO add Commutator
     private String processLetter(String s) {
         s = processLetterIn(s);
-        s = reflector.process(s);
+
+        int lastRotorState = rotors.getLast().getState();
+        s = reflector.process(s, lastRotorState);
+
         s = processLetterOut(s);
 
         return s;
@@ -57,13 +67,16 @@ public class Enigma {
         boolean turnNextRotor = true;
         String currentLetter = s;
 
+        int prevRotorState = 0;
+
         for (Rotor rotor : rotors) {
             if (turnNextRotor) {
                 if (rotor.turn() != 0) {
                     turnNextRotor = false;
                 }
             }
-            currentLetter = rotor.processLetterIn(currentLetter);
+            currentLetter = rotor.processLetterIn(currentLetter, prevRotorState);
+            prevRotorState = rotor.getState();
         }
         return currentLetter;
     }
@@ -71,9 +84,15 @@ public class Enigma {
     private String processLetterOut(String s) {
         Iterator<Rotor> iterator = rotors.descendingIterator();
 
+        int prevRotorState = 0;
+
         while (iterator.hasNext()) {
-            s = iterator.next().processLetterOut(s);
+            Rotor currentRotor = iterator.next();
+            s = currentRotor.processLetterOut(s, prevRotorState);
+            prevRotorState = currentRotor.getState();
         }
+
+        s = staticRotor.processLetterIn(s, prevRotorState);
 
         return s;
     }
@@ -94,19 +113,22 @@ public class Enigma {
     public String getRotorsState() {
         StringBuilder rotorBuilder = new StringBuilder("Rotors state:\n");
         int rotorCount = 1;
+
         StringBuilder delimiter = new StringBuilder();
         StringBuilder stateBuilder = new StringBuilder();
+
         for (Rotor rotor : rotors) {
             rotorBuilder.append(rotorCount++).append("|");
             delimiter.append("--");
             stateBuilder.append(rotor.getState()).append("|");
         }
+
         return rotorBuilder.append("\n")
                 .append(delimiter.append("\n"))
                 .append(stateBuilder).toString();
     }
 
-    public void exportState() {
+    public String exportState() {
         StringBuilder sb = new StringBuilder();
         for (Rotor rotor : rotors) {
             sb.append(rotor.getCsvState());
@@ -116,16 +138,28 @@ public class Enigma {
         sb.append(reflector.getCsvState());
         sb.append("\n");
 
-        System.out.println(sb);
+        return sb.toString();
     }
 
     public void importState() {
         Scanner sc = new Scanner(System.in);
+        StringBuilder stringBuilder = new StringBuilder();
 
-        for (Rotor rotor : rotors) {
-            rotor.importState(sc.nextLine());
+        while (sc.hasNextLine()) {
+            stringBuilder.append(sc.nextLine());
         }
 
-        reflector.importState(sc.nextLine());
+        importState(stringBuilder.toString());
+    }
+
+    public void importState(String state) {
+        String[] lines = state.split("\n");
+        int i = 0;
+
+        for (Rotor rotor : rotors) {
+            rotor.importState(lines[i++]);
+        }
+
+        reflector.importState(lines[i]);
     }
 }
