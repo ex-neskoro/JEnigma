@@ -4,7 +4,6 @@ import ex.neskoro.language.EnLanguage;
 import ex.neskoro.language.Language;
 
 import java.util.*;
-import java.util.Map.Entry;
 
 public class Rotor {
 
@@ -12,21 +11,14 @@ public class Rotor {
     // for ru: 0 - 32
     private int state;
     protected final Language language;
-    protected final HashMap<String, Integer> map;
-    protected ArrayList<String> inList;
-    private ArrayList<String> outList;
+    protected List<String> movableList;
+    protected List<String> staticList;
 
     public Rotor(Language language, int initState) {
         this.language = language;
-
         state = initState;
-
-        map = new HashMap<>();
-        mapInit();
-
-        inListInit();
-
-        outListInit();
+        staticListInit();
+        movableListInit();
     }
 
     public Rotor(Language language) {
@@ -37,28 +29,13 @@ public class Rotor {
         this(new EnLanguage());
     }
 
-    private void mapInit() {
-        int i = 0;
-        for (String s : language.getAlphabet().split("")) {
-            map.put(s, i++);
-        }
+    private void staticListInit() {
+        staticList = new ArrayList<>(Arrays.asList(language.getAlphabet().split("")));
     }
 
-    protected void inListInit() {
-        inList = new ArrayList<>(List.of(language.getAlphabet().split("")));
-        Collections.shuffle(inList);
-    }
-
-    private void outListInit() {
-        outList = new ArrayList<>(inList);
-
-        String[] alphabet = language.getAlphabet().split("");
-
-        for (int i = 0; i < language.getSize(); i++) {
-            int index = map.get(inList.get(i));
-            outList.remove(index);
-            outList.add(index, alphabet[i]);
-        }
+    protected void movableListInit() {
+        movableList = new ArrayList<>(List.of(language.getAlphabet().split("")));
+        Collections.shuffle(movableList);
     }
 
     @Override
@@ -68,9 +45,9 @@ public class Rotor {
         StringBuilder delimiter = new StringBuilder();
 
         int i = 0;
-        for (Entry<String, Integer> entry : map.entrySet()) {
-            appendLetter(in, entry.getKey().toUpperCase());
-            appendLetter(out, inList.get(i++).toUpperCase());
+        for (String str : staticList) {
+            appendLetter(in, str.toUpperCase());
+            appendLetter(out, movableList.get(i++).toUpperCase());
             delimiter.append("--");
         }
         return "State: %d\n".formatted(state) + in.append("\n").append(delimiter.append("\n")).append(out);
@@ -93,7 +70,7 @@ public class Rotor {
         StringBuilder sb = new StringBuilder();
         sb.append(state);
 
-        for (String s : inList) {
+        for (String s : movableList) {
             sb.append(",");
             sb.append(s);
         }
@@ -106,11 +83,9 @@ public class Rotor {
         setState(Integer.parseInt(stateArr[0]));
 
         for (int i = 1; i < stateArr.length; i++) {
-            inList.remove(i - 1);
-            inList.add(i - 1, stateArr[i]);
+            movableList.remove(i - 1);
+            movableList.add(i - 1, stateArr[i]);
         }
-
-        outListInit();
     }
 
     public int turn() {
@@ -119,27 +94,29 @@ public class Rotor {
     }
 
     public String processLetterIn(String s, int prevRotorState) {
-        int index = map.get(s);
+        int index = staticList.indexOf(s);
 
         int tempIndex = index + state - prevRotorState;
         if (tempIndex < 0) {
             tempIndex += language.getSize();
         }
 
-        s = inList.get((tempIndex) % language.getSize());
+        s = movableList.get(tempIndex % language.getSize());
 
         return s;
     }
 
     public String processLetterOut(String s, int prevRotorState) {
-        int index = map.get(s);
+        int index = staticList.indexOf(s);
 
         int tempIndex = index + state - prevRotorState;
         if (tempIndex < 0) {
             tempIndex += language.getSize();
         }
 
-        s = inList.get((tempIndex) % language.getSize());
+        s = staticList.get(tempIndex % language.getSize());
+
+        s = staticList.get(movableList.indexOf(s));
 
         return s;
     }

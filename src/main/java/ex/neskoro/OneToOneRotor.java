@@ -22,7 +22,7 @@ public class OneToOneRotor extends Rotor {
     }
 
     @Override
-    protected void inListInit() {
-        inList = new ArrayList<>(List.of(language.getAlphabet().split("")));
+    protected void movableListInit() {
+        movableList = new ArrayList<>(List.of(language.getAlphabet().split("")));
     }
 }

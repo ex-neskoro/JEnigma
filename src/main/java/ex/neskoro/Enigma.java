@@ -11,7 +11,6 @@ public class Enigma {
     private Language language;
     private LinkedList<Rotor> rotors;
     private Reflector reflector;
-
     private Rotor staticRotor = new OneToOneRotor();
 
     public Enigma(Language language, int rotorCount) {
@@ -21,7 +20,7 @@ public class Enigma {
         this.language = language;
         rotors = new LinkedList<>();
 
-        for (; rotorCount > 0; rotorCount--) {
+        for (int i = 0; i < rotorCount; i ++) {
             rotors.add(new Rotor(language));
         }
 
