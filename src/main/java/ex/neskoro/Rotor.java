@@ -114,7 +114,7 @@ public class Rotor {
     }
 
     public int turn() {
-        state = ++state % (language.getSize() - 1);
+        state = ++state % language.getSize();
         return state;
     }
 
@@ -123,10 +123,10 @@ public class Rotor {
 
         int tempIndex = index + state - prevRotorState;
         if (tempIndex < 0) {
-            tempIndex += language.getSize() - 1;
+            tempIndex += language.getSize();
         }
 
-        s = inList.get((tempIndex) % (language.getSize() - 1));
+        s = inList.get((tempIndex) % language.getSize());
 
         return s;
     }
@@ -136,10 +136,10 @@ public class Rotor {
 
         int tempIndex = index + state - prevRotorState;
         if (tempIndex < 0) {
-            tempIndex += language.getSize() - 1;
+            tempIndex += language.getSize();
         }
 
-        s = inList.get((tempIndex) % (language.getSize() - 1));
+        s = inList.get((tempIndex) % language.getSize());
 
         return s;
     }

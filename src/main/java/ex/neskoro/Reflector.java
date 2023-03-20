@@ -78,10 +78,10 @@ public class Reflector {
         int tempIndex = index - lastRotorState;
 
         if (tempIndex < 0) {
-            tempIndex += language.getSize() - 1;
+            tempIndex += language.getSize();
         }
 
-        return inList.get(tempIndex % (language.getSize() - 1));
+        return inList.get(tempIndex % language.getSize());
     }
 
     public void importState(String csvLine) {
