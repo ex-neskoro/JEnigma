@@ -1,4 +1,7 @@
 import ex.neskoro.Enigma;
+import ex.neskoro.language.EnLanguage;
+import ex.neskoro.language.Language;
+import ex.neskoro.language.RuLanguage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EnigmaTests {
 
     private final String HELLO = "Hello, world!";
+    private final String HELLO_RUS = "Привет, мир!";
 
     private final String DEFAULT_STATE = """
             24,a,x,o,d,l,p,n,m,i,e,q,r,v,f,c,z,h,y,g,k,j,w,s,u,b,t
@@ -45,15 +49,31 @@ class EnigmaTests {
         assertEquals(firstOut, secondOut);
     }
 
-    @Test
-    void encodeDecode() {
+    void encodeDecode(Language language, String init) {
+        enigma = new Enigma(language, 3);
         String initState = enigma.exportState();
 
-        String out = enigma.processString(HELLO);
+        String out = enigma.processString(init);
 
         enigma.importState(initState);
 
-        assertEquals(HELLO, enigma.processString(out));
+        String decoded = enigma.processString(out);
+
+        System.out.println(init);
+        System.out.println(out);
+        System.out.println(decoded);
+
+        assertEquals(init, decoded);
+    }
+
+//    @Test
+//    void encodeDecodeRussian() {
+//        encodeDecode(new RuLanguage(), HELLO_RUS);
+//    }
+
+    @Test
+    void encodeDecodeEnglish() {
+        encodeDecode(new EnLanguage(), HELLO);
     }
 
 
