@@ -37,7 +37,7 @@ class EnigmaTests {
     }
 
     @Test
-    @DisplayName("Same state produce same outString")
+    @DisplayName("Same state produce same output")
     void testSameStateSameIO() {
         String initState = enigma.exportState();
 
@@ -66,10 +66,10 @@ class EnigmaTests {
         assertEquals(init, decoded);
     }
 
-//    @Test
-//    void encodeDecodeRussian() {
-//        encodeDecode(new RuLanguage(), HELLO_RUS);
-//    }
+    @Test
+    void encodeDecodeRussian() {
+        encodeDecode(new RuLanguage(), HELLO_RUS);
+    }
 
     @Test
     void encodeDecodeEnglish() {
