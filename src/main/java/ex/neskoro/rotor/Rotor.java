@@ -6,7 +6,7 @@ import java.util.*;
 
 public final class Rotor extends AbstractRotor implements Turnable {
 
-    private int[] turnoverState;
+    private String turnoverState;
 
     private Rotor(Language language, int initState) {
         super(language, initState);
@@ -16,20 +16,18 @@ public final class Rotor extends AbstractRotor implements Turnable {
         super(language);
     }
 
-    public Rotor(String movableList) {
+    public Rotor(String movableList, String turnoverState) {
         super(movableList);
+        setTurnoverState(turnoverState);
     }
 
     @Override
     public boolean turn() {
         boolean turnNextRotor = false;
 
-        state = ++state % language.getSize();
-        for (int state : turnoverState) {
-            if (state == this.state) {
-                turnNextRotor = true;
-                break;
-            }
+        turnState = ++turnState % language.getSize();
+        if (turnoverState.contains(staticList.get(turnState))) {
+            turnNextRotor = true;
         }
 
         return turnNextRotor;
@@ -41,13 +39,39 @@ public final class Rotor extends AbstractRotor implements Turnable {
         Collections.shuffle(movableList);
     }
 
-    protected void setTurnoverState(String[] turnoverLetters) {
-        if (turnoverLetters.length > language.getSize()) {
+    protected void setTurnoverState(String turnoverState) {
+        if (turnoverState.length() > language.getSize()) {
             throw new IllegalArgumentException("Turnover letters size must be less than language size");
         }
-        turnoverState = new int[turnoverLetters.length];
-        for (int i = 0; i < turnoverLetters.length; i++) {
-            turnoverState[i] = staticList.indexOf(turnoverLetters[i]);
+
+        this.turnoverState = turnoverState;
+    }
+
+    @Override
+    public String exportState() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(turnState);
+        stringBuilder.append(",");
+
+        for (String letter : movableList) {
+            stringBuilder.append(letter);
         }
+        stringBuilder.append(",");
+
+        stringBuilder.append(turnoverState);
+
+        return stringBuilder.toString();
+    }
+
+    @Override
+    public void importState(String state) {
+        String[] stateArr = state.split(",");
+
+        this.turnState = Integer.parseInt(stateArr[0]);
+
+        movableList = new ArrayList<>(Arrays.asList(stateArr[1].split("")));
+
+        turnoverState = stateArr[3].toLowerCase();
     }
 }

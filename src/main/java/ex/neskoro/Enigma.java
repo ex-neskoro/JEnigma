@@ -67,7 +67,7 @@ public class Enigma {
 
         letter = processLetterIn(letter);
 
-        int lastRotorState = rotors.getLast().getState();
+        int lastRotorState = rotors.getLast().getTurnState();
         letter = reflector.processLetterIn(letter, lastRotorState);
 
         letter = processLetterOut(letter);
@@ -84,12 +84,12 @@ public class Enigma {
 
         for (Rotor rotor : rotors) {
             if (turnNextRotor) {
-                if (rotor.turn() != 0) {
+                if (rotor.turn()) {
                     turnNextRotor = false;
                 }
             }
             letter = rotor.processLetterIn(letter, prevRotorState);
-            prevRotorState = rotor.getState();
+            prevRotorState = rotor.getTurnState();
         }
         return letter;
     }
@@ -102,7 +102,7 @@ public class Enigma {
         while (iterator.hasNext()) {
             Rotor currentRotor = iterator.next();
             letter = currentRotor.processLetterOut(letter, prevRotorState);
-            prevRotorState = currentRotor.getState();
+            prevRotorState = currentRotor.getTurnState();
         }
 
         letter = entryRotor.processLetterIn(letter, prevRotorState);
@@ -133,7 +133,7 @@ public class Enigma {
         for (Rotor rotor : rotors) {
             rotorBuilder.append(rotorCount++).append("|");
             delimiter.append("--");
-            stateBuilder.append(rotor.getState()).append("|");
+            stateBuilder.append(rotor.getTurnState()).append("|");
         }
 
         return rotorBuilder.append(System.lineSeparator())
@@ -143,6 +143,14 @@ public class Enigma {
 
     public String exportState() {
         StringBuilder sb = new StringBuilder();
+
+        sb.append(commutator.exportState());
+        sb.append(System.lineSeparator());
+
+        sb.append(entryRotor.exportState());
+        sb.append(System.lineSeparator());
+
+
         for (Rotor rotor : rotors) {
             sb.append(rotor.exportState());
             sb.append(System.lineSeparator());

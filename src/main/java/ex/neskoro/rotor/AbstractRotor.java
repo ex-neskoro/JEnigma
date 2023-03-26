@@ -6,14 +6,14 @@ import ex.neskoro.language.Language;
 import java.util.*;
 
 public abstract class AbstractRotor {
-    protected int state;
+    protected int turnState;
     protected Language language;
     protected List<String> movableList;
     protected List<String> staticList;
 
-    protected AbstractRotor(Language language, int initState) {
+    protected AbstractRotor(Language language, int initTurnState) {
         this.language = language;
-        setState(initState);
+        setTurnState(initTurnState);
         staticListInit();
         movableListInit();
     }
@@ -43,18 +43,18 @@ public abstract class AbstractRotor {
         builder.append(" ");
     }
 
-    public int getState() {
-        return state;
+    public int getTurnState() {
+        return turnState;
     }
 
-    public void setState(int state) {
-        this.state = state % language.getSize();
+    public void setTurnState(int turnState) {
+        this.turnState = turnState % language.getSize();
     }
 
     public String processLetterIn(String s, int prevRotorState) {
         int index = staticList.indexOf(s);
 
-        int tempIndex = index + state - prevRotorState;
+        int tempIndex = index + turnState - prevRotorState;
         if (tempIndex < 0) {
             tempIndex += language.getSize();
         }
@@ -67,7 +67,7 @@ public abstract class AbstractRotor {
     public String processLetterOut(String s, int prevRotorState) {
         int index = staticList.indexOf(s);
 
-        int tempIndex = index + state - prevRotorState;
+        int tempIndex = index + turnState - prevRotorState;
         if (tempIndex < 0) {
             tempIndex += language.getSize();
         }
@@ -81,24 +81,23 @@ public abstract class AbstractRotor {
 
     public String exportState() {
         StringBuilder sb = new StringBuilder();
-        sb.append(state);
+        sb.append(turnState);
+        sb.append(",");
 
         for (String s : movableList) {
-            sb.append(",");
             sb.append(s);
         }
 
         return sb.toString();
     }
 
-    public void importState(String csvState) {
-        String[] stateArr = csvState.split(",");
-        setState(Integer.parseInt(stateArr[0]));
+    public void importState(String state) {
+        String[] stateArr = state.split(",");
+        setTurnState(Integer.parseInt(stateArr[0]));
 
-        for (int i = 1; i < stateArr.length; i++) {
-            movableList.remove(i - 1);
-            movableList.add(i - 1, stateArr[i]);
-        }
+        String[] movableListArr = stateArr[1].split("");
+
+        movableList = new ArrayList<>(Arrays.asList(movableListArr));
     }
 
     @Override
@@ -113,7 +112,7 @@ public abstract class AbstractRotor {
             appendLetter(out, movableList.get(i++).toUpperCase());
             delimiter.append("--");
         }
-        return "State: %d".formatted(state) +
+        return "State: %d".formatted(turnState) +
                 System.lineSeparator() +
                 in.append(System.lineSeparator()).append(delimiter.append(System.lineSeparator())).append(out);
     }

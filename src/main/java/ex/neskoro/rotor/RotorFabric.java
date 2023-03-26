@@ -1,11 +1,15 @@
 package ex.neskoro.rotor;
 
 public class RotorFabric {
-    public static AbstractRotor getRotor(StandardRotorType type) {
-        return switch (type.rotorType) {
-            case ENTRY_ROTOR -> new EntryRotor(type.movableListState);
-            case ROTOR -> new Rotor(type.movableListState);
-            case REFLECTOR -> new Reflector(type.movableListState);
-        };
+    public static Rotor getRotor(StandardRotorType type) {
+        return new Rotor(type.movableListState, type.turnoverState);
+    }
+
+    public static EntryRotor getEntryRotor(StandardEntryRotorType type) {
+        return new EntryRotor(type.movableListState);
+    }
+
+    public static Reflector getReflector(StandardReflectorType type) {
+        return new Reflector(type.movableListState);
     }
 }

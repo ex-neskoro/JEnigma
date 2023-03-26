@@ -16,10 +16,10 @@ public class EntryRotor extends AbstractRotor {
     }
 
     @Override
-    public void setState(int state) {
-        if (state != 0) {
+    public void setTurnState(int turnState) {
+        if (turnState != 0) {
             throw new IllegalArgumentException("Reflector state must be 0");
         }
-        super.setState(state);
+        super.setTurnState(turnState);
     }
 }

@@ -4,6 +4,7 @@ import ex.neskoro.exception.CommutatorSizeException;
 import ex.neskoro.language.Language;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Commutator {
@@ -20,9 +21,9 @@ public class Commutator {
     }
 
     public void addPair(String a, String b) throws IllegalArgumentException {
-        if (!(language.getAlphabet().contains(a) && language.getAlphabet().contains(b))) {
-            throw new IllegalArgumentException("Commutator language do not contain letter");
-        }
+//        if (!(language.getAlphabet().contains(a) && language.getAlphabet().contains(b))) {
+//            throw new IllegalArgumentException("Commutator language do not contain letter");
+//        }
 
         if (map.size() <= language.getSize() - 2) {
             map.put(a, b);
@@ -36,5 +37,22 @@ public class Commutator {
         return Objects.requireNonNullElse(map.get(letter), letter);
     }
 
-    // todo export/import methods
+    public String exportState() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            stringBuilder.append(entry.getKey());
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public void importState(String state) {
+        String[] letters = state.split("");
+
+        for (int i = 0; i < letters.length; i += 2) {
+            addPair(letters[i], letters[i+1]);
+        }
+    }
+
 }
