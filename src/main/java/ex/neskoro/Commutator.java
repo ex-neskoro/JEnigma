@@ -19,9 +19,9 @@ public class Commutator {
         this.language = language;
     }
 
-    public void addPair(String a, String b) {
+    public void addPair(String a, String b) throws IllegalArgumentException {
         if (!(language.getAlphabet().contains(a) && language.getAlphabet().contains(b))) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Commutator language do not contain letter");
         }
 
         if (map.size() <= language.getSize() - 2) {
