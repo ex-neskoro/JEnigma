@@ -5,7 +5,7 @@ public abstract class Language {
     protected String alphabet;
 
     public Language(String alphabet) {
-        this.alphabet = alphabet;
+        this.alphabet = alphabet.toLowerCase();
         this.size = alphabet.length();
     }
 

@@ -61,14 +61,13 @@ public class Enigma {
         return stringBuilder.toString();
     }
 
-    // TODO add Commutator
     private String processLetter(String letter) {
         letter = commutator.processLetter(letter);
 
         letter = processLetterIn(letter);
 
-        int lastRotorState = rotors.getLast().getTurnState();
-        letter = reflector.processLetterIn(letter, lastRotorState);
+        int lastRotorTurnState = rotors.getLast().getTurnState();
+        letter = reflector.processLetterIn(letter, lastRotorTurnState);
 
         letter = processLetterOut(letter);
 
@@ -78,15 +77,14 @@ public class Enigma {
     }
 
     private String processLetterIn(String letter) {
-        boolean turnNextRotor = true;
-
         int prevRotorState = 0;
 
+        letter = entryRotor.processLetterIn(letter, prevRotorState);
+
+        boolean turnNextRotor = true;
         for (Rotor rotor : rotors) {
             if (turnNextRotor) {
-                if (rotor.turn()) {
-                    turnNextRotor = false;
-                }
+                turnNextRotor = rotor.turn();
             }
             letter = rotor.processLetterIn(letter, prevRotorState);
             prevRotorState = rotor.getTurnState();
@@ -99,13 +97,14 @@ public class Enigma {
 
         int prevRotorState = 0;
 
+        Rotor currentRotor;
         while (iterator.hasNext()) {
-            Rotor currentRotor = iterator.next();
+            currentRotor = iterator.next();
             letter = currentRotor.processLetterOut(letter, prevRotorState);
             prevRotorState = currentRotor.getTurnState();
         }
 
-        letter = entryRotor.processLetterIn(letter, prevRotorState);
+        letter = entryRotor.processLetterOut(letter, prevRotorState);
 
         return letter;
     }
@@ -175,8 +174,12 @@ public class Enigma {
 
     public void importState(String state) {
         String[] lines = state.split(System.lineSeparator());
-        int i = 0;
 
+        commutator.importState(lines[0]);
+
+        entryRotor.importState(lines[1]);
+
+        int i = 2;
         for (Rotor rotor : rotors) {
             rotor.importState(lines[i++]);
         }

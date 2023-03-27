@@ -2,29 +2,42 @@ package ex.neskoro;
 
 import ex.neskoro.exception.CommutatorSizeException;
 import ex.neskoro.language.Language;
+import ex.neskoro.rotor.AbstractRotor;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Commutator {
-    private HashMap<String, String> map;
+    private LinkedHashMap<String, String> map;
     private Language language;
+    private List<String> staticList;
 
     private Commutator() {
-        map = new HashMap<>();
+        map = new LinkedHashMap<>();
     }
 
     public Commutator(Language language) {
         this();
         this.language = language;
+        staticList = new ArrayList<>(Arrays.asList(language.getAlphabet().split("")));
+        initRandomMap();
     }
 
-    public void addPair(String a, String b) throws IllegalArgumentException {
-//        if (!(language.getAlphabet().contains(a) && language.getAlphabet().contains(b))) {
-//            throw new IllegalArgumentException("Commutator language do not contain letter");
-//        }
+    private void initRandomMap() {
+        Random random = new Random();
 
+        int randomLetterCount = random.nextInt(2, language.getSize());
+        if (randomLetterCount % 2 != 0) {
+            randomLetterCount--;
+        }
+
+        ArrayList<Integer> lettersIndex = AbstractRotor.generateRandomLettersIndexes(language, randomLetterCount);
+
+        for (int i = 0; i < randomLetterCount; i += 2) {
+            addPair(staticList.get(lettersIndex.get(i)), staticList.get(lettersIndex.get(i + 1)));
+        }
+    }
+
+    public void addPair(String a, String b) {
         if (map.size() <= language.getSize() - 2) {
             map.put(a, b);
             map.put(b, a);
@@ -48,6 +61,7 @@ public class Commutator {
     }
 
     public void importState(String state) {
+        map = new LinkedHashMap<>();
         String[] letters = state.split("");
 
         for (int i = 0; i < letters.length; i += 2) {

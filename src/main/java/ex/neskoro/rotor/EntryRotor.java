@@ -2,6 +2,8 @@ package ex.neskoro.rotor;
 
 import ex.neskoro.language.Language;
 
+import java.util.Collections;
+
 public class EntryRotor extends AbstractRotor {
     public EntryRotor(Language language, int initState) {
         super(language, initState);
@@ -9,6 +11,7 @@ public class EntryRotor extends AbstractRotor {
 
     public EntryRotor(Language language) {
         this(language, 0);
+        Collections.shuffle(movableList);
     }
 
     protected EntryRotor(String movableList) {
