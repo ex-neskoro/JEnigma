@@ -13,11 +13,9 @@ class EnigmaTests {
     private final String HELLO = "Hello, world!";
     private final String HELLO_RUS = "Привет, мир!";
 
-    private final String DEFAULT_STATE = """
-            24,a,x,o,d,l,p,n,m,i,e,q,r,v,f,c,z,h,y,g,k,j,w,s,u,b,t
-            17,g,m,f,o,r,x,c,e,k,h,z,p,b,s,l,v,u,d,i,j,a,t,n,q,y,w
-            12,e,i,m,c,x,w,a,k,d,n,g,b,v,f,z,p,q,o,t,h,u,s,j,l,y,r
-            e,j,m,z,a,l,y,x,v,b,w,f,c,r,q,u,o,n,t,s,p,i,k,h,g,d""";
+    private final Language EN = new EnLanguage();
+    private final Language RU = new RuLanguage();
+    private final Language DEFAULT_LAN = EN;
 
     Enigma enigma;
 
@@ -32,8 +30,9 @@ class EnigmaTests {
         enigma = new Enigma();
 
         enigma.importState(initState);
+        String exportedState = enigma.exportState();
 
-        assertEquals(initState, enigma.exportState());
+        assertEquals(initState, exportedState);
     }
 
     @Test
@@ -49,6 +48,16 @@ class EnigmaTests {
         assertEquals(firstOut, secondOut);
     }
 
+    @Test
+    void encodeDecodeEnglish() {
+        encodeDecode(EN, HELLO);
+    }
+
+    @Test
+    void encodeDecodeRussian() {
+        encodeDecode(RU, HELLO_RUS);
+    }
+
     void encodeDecode(Language language, String init) {
         enigma = new Enigma(language, 3);
         String initState = enigma.exportState();
@@ -59,21 +68,7 @@ class EnigmaTests {
 
         String decoded = enigma.processString(out);
 
-        System.out.println(init);
-        System.out.println(out);
-        System.out.println(decoded);
-
         assertEquals(init, decoded);
-    }
-
-    @Test
-    void encodeDecodeRussian() {
-        encodeDecode(new RuLanguage(), HELLO_RUS);
-    }
-
-    @Test
-    void encodeDecodeEnglish() {
-        encodeDecode(new EnLanguage(), HELLO);
     }
 
 
