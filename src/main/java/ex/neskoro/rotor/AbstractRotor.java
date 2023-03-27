@@ -18,13 +18,13 @@ public abstract class AbstractRotor {
         movableListInit();
     }
 
+    protected AbstractRotor(Language language) {
+        this(language, 0);
+    }
+
     protected AbstractRotor(String movableList) {
         this(new EnLanguage());
         movableListInit(movableList);
-    }
-
-    protected AbstractRotor(Language language) {
-        this(language, 0);
     }
 
     protected void staticListInit() {
@@ -95,9 +95,7 @@ public abstract class AbstractRotor {
         String[] stateArr = state.split(",");
         setTurnState(Integer.parseInt(stateArr[0]));
 
-        String[] movableListArr = stateArr[1].split("");
-
-        movableList = new ArrayList<>(Arrays.asList(movableListArr));
+        movableList = new ArrayList<>(Arrays.asList(stateArr[1].split("")));
     }
 
     @Override
@@ -117,4 +115,22 @@ public abstract class AbstractRotor {
                 in.append(System.lineSeparator()).append(delimiter.append(System.lineSeparator())).append(out);
     }
 
+    public static ArrayList<Integer> generateRandomLettersIndexes(Language language, int lettersCount) {
+        Random random = new Random();
+
+        ArrayList<Integer> lettersIndexes = new ArrayList<>(lettersCount);
+        for (int i = 0; i < lettersCount; i++) {
+            lettersIndexes.add(Integer.MAX_VALUE);
+        }
+
+        for (int i = 0; i < lettersCount; i++) {
+            Integer randomIndex;
+            do {
+                randomIndex = random.nextInt(language.getSize());
+                lettersIndexes.set(i, randomIndex);
+            } while (lettersIndexes.indexOf(randomIndex) != lettersIndexes.lastIndexOf(randomIndex));
+        }
+
+        return lettersIndexes;
+    }
 }
