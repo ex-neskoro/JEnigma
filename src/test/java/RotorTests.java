@@ -1,7 +1,6 @@
 import ex.neskoro.Commutator;
-import ex.neskoro.language.EnLanguage;
 import ex.neskoro.language.Language;
-import ex.neskoro.language.RuLanguage;
+import ex.neskoro.language.LanguageAlphabet;
 import ex.neskoro.rotor.EntryRotor;
 import ex.neskoro.rotor.Rotor;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +16,8 @@ public class RotorTests {
     Commutator commutator;
     EntryRotor entryRotor;
 
-    private final Language EN = new EnLanguage();
-    private final Language RUS = new RuLanguage();
+    private final Language EN = new Language(LanguageAlphabet.EN);
+//    private final Language RUS = new Language(LanguageAlphabet.RU);
     private final Language DEFAULT_LAN = EN;
 
     private final String HELLO_EN = "Hello, world!";

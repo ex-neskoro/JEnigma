@@ -1,7 +1,7 @@
 package ex.neskoro;
 
-import ex.neskoro.language.EnLanguage;
 import ex.neskoro.language.Language;
+import ex.neskoro.language.LanguageAlphabet;
 import ex.neskoro.rotor.EntryRotor;
 import ex.neskoro.rotor.Reflector;
 import ex.neskoro.rotor.Rotor;
@@ -17,8 +17,12 @@ public class Enigma {
     private LinkedList<Rotor> rotors;
     private Reflector reflector;
 
+    public Enigma() {
+        this(new Language(LanguageAlphabet.EN), 3);
+    }
+
     public Enigma(Language language, int rotorCount) {
-        if (rotorCount > 15) {
+        if (rotorCount > 100) {
             rotorCount = 15;
         }
         this.language = language;
@@ -33,10 +37,6 @@ public class Enigma {
         }
 
         reflector = new Reflector(language);
-    }
-
-    public Enigma() {
-        this(new EnLanguage(), 3);
     }
 
     public String processString(String string) {
@@ -143,6 +143,11 @@ public class Enigma {
     public String exportState() {
         StringBuilder sb = new StringBuilder();
 
+        sb.append(language.getAlphabetType().name());
+        sb.append(",");
+        sb.append(rotors.size());
+        sb.append(System.lineSeparator());
+
         sb.append(commutator.exportState());
         sb.append(System.lineSeparator());
 
@@ -175,11 +180,11 @@ public class Enigma {
     public void importState(String state) {
         String[] lines = state.split(System.lineSeparator());
 
-        commutator.importState(lines[0]);
+        commutator.importState(lines[1]);
 
-        entryRotor.importState(lines[1]);
+        entryRotor.importState(lines[2]);
 
-        int i = 2;
+        int i = 3;
         for (Rotor rotor : rotors) {
             rotor.importState(lines[i++]);
         }

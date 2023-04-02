@@ -1,11 +1,13 @@
 package ex.neskoro.language;
 
-public abstract class Language {
+public class Language {
     protected int size;
     protected String alphabet;
+    private LanguageAlphabet languageAlphabet;
 
-    public Language(String alphabet) {
-        this.alphabet = alphabet.toLowerCase();
+    public Language(LanguageAlphabet languageAlphabet) {
+        this.languageAlphabet = languageAlphabet;
+        this.alphabet = languageAlphabet.alphabet;
         this.size = alphabet.length();
     }
 
@@ -15,5 +17,9 @@ public abstract class Language {
 
     public String getAlphabet() {
         return alphabet;
+    }
+
+    public LanguageAlphabet getAlphabetType() {
+        return languageAlphabet;
     }
 }

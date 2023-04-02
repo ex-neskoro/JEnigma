@@ -5,8 +5,8 @@ import ex.neskoro.language.Language;
 import java.util.*;
 
 public final class Rotor extends AbstractRotor implements Turnable {
-
     private String turnoverState;
+    private static int MIN_TURNOVER_STATE_COUNT = 1;
 
     private Rotor(Language language, int initState) {
         super(language, initState);
@@ -45,7 +45,7 @@ public final class Rotor extends AbstractRotor implements Turnable {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
 
-        int randomLetterCount = random.nextInt(1, 2);
+        int randomLetterCount = random.nextInt(MIN_TURNOVER_STATE_COUNT, language.getSize());
 
         ArrayList<Integer> lettersIndex = AbstractRotor.generateRandomLettersIndexes(language, randomLetterCount);
 

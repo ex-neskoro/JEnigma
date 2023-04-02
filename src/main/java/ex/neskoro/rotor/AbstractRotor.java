@@ -1,7 +1,7 @@
 package ex.neskoro.rotor;
 
-import ex.neskoro.language.EnLanguage;
 import ex.neskoro.language.Language;
+import ex.neskoro.language.LanguageAlphabet;
 
 import java.util.*;
 
@@ -23,7 +23,7 @@ public abstract class AbstractRotor {
     }
 
     protected AbstractRotor(String movableList) {
-        this(new EnLanguage());
+        this(new Language(LanguageAlphabet.EN));
         movableListInit(movableList);
     }
 
@@ -35,7 +35,11 @@ public abstract class AbstractRotor {
         movableList = new ArrayList<>(List.of(language.getAlphabet().split("")));
     }
     protected void movableListInit(String movableList) {
-        this.movableList = new ArrayList<>(List.of(movableList.split("")));
+        String[] letters = movableList.split("");
+        for (int i = 0; i < letters.length; i++) {
+            letters[i] = letters[i].toLowerCase();
+        }
+        this.movableList = new ArrayList<>(List.of(letters));
     }
 
     private void appendLetter(StringBuilder builder, String s) {

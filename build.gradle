@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'ex.neskoro'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -19,4 +19,20 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+
+compileJava {
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'ex.neskoro.cli.Main'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
