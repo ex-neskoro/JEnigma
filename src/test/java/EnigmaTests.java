@@ -5,12 +5,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EnigmaTests {
 
     private final String HELLO = "Hello, world!";
-    private final String HELLO_RUS = "Привет, мир!";
+    private final String EAT_CAKES_RUS = "съешь ещё этих мягких французских булок, да выпей чаю!";
 
     private final Language EN = new Language(LanguageAlphabet.EN);
     private final Language RU = new Language(LanguageAlphabet.RU);
@@ -49,15 +54,35 @@ class EnigmaTests {
 
     @Test
     void encodeDecodeEnglish() {
-        encodeDecode(EN, HELLO);
+        assertTrue(encodeDecode(EN, HELLO));
     }
 
     @Test
     void encodeDecodeRussian() {
-        encodeDecode(RU, HELLO_RUS);
+        assertTrue(encodeDecode(RU, EAT_CAKES_RUS));
     }
 
-    void encodeDecode(Language language, String init) {
+    @Test
+    void testAllLanguages() {
+        LanguageAlphabet[] alphabets = LanguageAlphabet.values();
+
+        List<Language> languages = new ArrayList<>();
+        for (LanguageAlphabet alphabet : alphabets) {
+            languages.add(new Language(alphabet));
+        }
+
+        List<Boolean> expected = Collections.nCopies(alphabets.length, true);
+
+        List<Boolean> result = new ArrayList<>();
+
+        for (Language language : languages) {
+            result.add(encodeDecode(language, language.getAlphabet()));
+        }
+
+        assertEquals(expected, result);
+    }
+
+    boolean encodeDecode(Language language, String init) {
         enigma = new Enigma(language, 3);
         String initState = enigma.exportState();
 
@@ -67,7 +92,9 @@ class EnigmaTests {
 
         String decoded = enigma.processString(out);
 
-        assertEquals(init, decoded);
+//        assertEquals(init, decoded);
+
+        return init.equals(decoded);
     }
 
 
