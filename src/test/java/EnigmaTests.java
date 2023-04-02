@@ -13,7 +13,7 @@ class EnigmaTests {
     private final String HELLO_RUS = "Привет, мир!";
 
     private final Language EN = new Language(LanguageAlphabet.EN);
-//    private final Language RU = new Language(LanguageAlphabet.RU);
+    private final Language RU = new Language(LanguageAlphabet.RU);
     private final Language DEFAULT_LAN = EN;
 
     Enigma enigma;
@@ -52,10 +52,10 @@ class EnigmaTests {
         encodeDecode(EN, HELLO);
     }
 
-//    @Test
-//    void encodeDecodeRussian() {
-//        encodeDecode(RU, HELLO_RUS);
-//    }
+    @Test
+    void encodeDecodeRussian() {
+        encodeDecode(RU, HELLO_RUS);
+    }
 
     void encodeDecode(Language language, String init) {
         enigma = new Enigma(language, 3);

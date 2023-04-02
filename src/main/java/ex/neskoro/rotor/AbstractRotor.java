@@ -14,8 +14,7 @@ public abstract class AbstractRotor {
     protected AbstractRotor(Language language, int initTurnState) {
         this.language = language;
         setTurnState(initTurnState);
-        staticListInit();
-        movableListInit();
+        listsInit();
     }
 
     protected AbstractRotor(Language language) {
@@ -25,6 +24,11 @@ public abstract class AbstractRotor {
     protected AbstractRotor(String movableList) {
         this(new Language(LanguageAlphabet.EN));
         movableListInit(movableList);
+    }
+
+    protected void listsInit() {
+        staticListInit();
+        movableListInit();
     }
 
     protected void staticListInit() {

@@ -1,7 +1,7 @@
 package ex.neskoro.language;
 
 public enum LanguageAlphabet {
-//    RU("абвгдеёжзиклмнопрстуфхцчшщъыьэюя"),
+    RU("абвгдеёжзиклмнопрстуфхцчшщъыьэюя"),
     EN("abcdefghijklmnopqrstuvwxyz"),
 
     ;

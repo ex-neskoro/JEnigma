@@ -22,33 +22,30 @@ public final class Reflector extends AbstractRotor {
     // Reflector A - https://en.wikipedia.org/wiki/Enigma_rotor_details
     @Override
     protected void movableListInit() {
-        movableList = new ArrayList<>();
-        movableList.add("e");
-        movableList.add("j");
-        movableList.add("m");
-        movableList.add("z");
-        movableList.add("a");
-        movableList.add("l");
-        movableList.add("y");
-        movableList.add("x");
-        movableList.add("v");
-        movableList.add("b");
-        movableList.add("w");
-        movableList.add("f");
-        movableList.add("c");
-        movableList.add("r");
-        movableList.add("q");
-        movableList.add("u");
-        movableList.add("o");
-        movableList.add("n");
-        movableList.add("t");
-        movableList.add("s");
-        movableList.add("p");
-        movableList.add("i");
-        movableList.add("k");
-        movableList.add("h");
-        movableList.add("g");
-        movableList.add("d");
+        movableList = new ArrayList<>(staticList);
+
+        Collections.fill(movableList, null);
+
+        List<String> lettersList = new ArrayList<>(staticList);
+        Collections.shuffle(lettersList);
+        Queue<String> queue = new ArrayDeque<>(lettersList);
+
+        int i = 0;
+        while (!queue.isEmpty()) {
+            if (movableList.get(i) == null) {
+                String letter = queue.poll();
+                movableList.remove(i);
+                movableList.add(i, letter);
+
+                int currentLetterIndex = staticList.indexOf(letter);
+
+                movableList.remove(currentLetterIndex);
+                movableList.add(currentLetterIndex, staticList.get(i));
+
+                queue.remove(staticList.get(i));
+            }
+            i++;
+        }
     }
 
     @Override
