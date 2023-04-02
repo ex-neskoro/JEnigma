@@ -5,11 +5,6 @@ import ex.neskoro.language.Language;
 import java.util.*;
 
 public final class Reflector extends AbstractRotor {
-
-    public Reflector(Language language, int initState) {
-        super(language, initState);
-    }
-
     public Reflector(Language language) {
         super(language);
     }
@@ -37,12 +32,14 @@ public final class Reflector extends AbstractRotor {
                 movableList.remove(i);
                 movableList.add(i, letter);
 
-                int currentLetterIndex = staticList.indexOf(letter);
+                if (!(language.getSize() % 2 != 0 && i == language.getSize() - 1)) {
+                    int currentLetterIndex = staticList.indexOf(letter);
 
-                movableList.remove(currentLetterIndex);
-                movableList.add(currentLetterIndex, staticList.get(i));
+                    movableList.remove(currentLetterIndex);
+                    movableList.add(currentLetterIndex, staticList.get(i));
 
-                queue.remove(staticList.get(i));
+                    queue.remove(staticList.get(i));
+                }
             }
             i++;
         }
