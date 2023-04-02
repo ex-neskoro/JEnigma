@@ -2,7 +2,9 @@ package ex.neskoro.rotor;
 
 import ex.neskoro.language.Language;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public final class Rotor extends AbstractRotor implements Turnable {
     private String turnoverState;

@@ -3,7 +3,10 @@ package ex.neskoro.rotor;
 import ex.neskoro.language.Language;
 import ex.neskoro.language.LanguageAlphabet;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public abstract class AbstractRotor {
     protected int turnState;
@@ -38,6 +41,7 @@ public abstract class AbstractRotor {
     protected void movableListInit() {
         movableList = new ArrayList<>(List.of(language.getAlphabet().split("")));
     }
+
     protected void movableListInit(String movableList) {
         String[] letters = movableList.split("");
         for (int i = 0; i < letters.length; i++) {

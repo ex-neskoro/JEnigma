@@ -13,8 +13,6 @@ public final class Reflector extends AbstractRotor {
         super(movableList);
     }
 
-    // TODO add random initialization -> any Language init
-    // Reflector A - https://en.wikipedia.org/wiki/Enigma_rotor_details
     @Override
     protected void movableListInit() {
         movableList = new ArrayList<>(staticList);

@@ -3,7 +3,7 @@ package ex.neskoro.language;
 public class Language {
     protected int size;
     protected String alphabet;
-    private LanguageAlphabet languageAlphabet;
+    private final LanguageAlphabet languageAlphabet;
 
     public Language(LanguageAlphabet languageAlphabet) {
         this.languageAlphabet = languageAlphabet;

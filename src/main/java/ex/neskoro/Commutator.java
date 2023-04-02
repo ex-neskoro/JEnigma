@@ -65,7 +65,7 @@ public class Commutator {
         String[] letters = state.split("");
 
         for (int i = 0; i < letters.length; i += 2) {
-            addPair(letters[i], letters[i+1]);
+            addPair(letters[i], letters[i + 1]);
         }
     }
 
