@@ -92,8 +92,6 @@ class EnigmaTests {
 
         String decoded = enigma.processString(out);
 
-//        assertEquals(init, decoded);
-
         return init.equals(decoded);
     }
 

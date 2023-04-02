@@ -8,14 +8,13 @@ import ex.neskoro.rotor.Rotor;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class Enigma {
-    private Language language;
-    private Commutator commutator;
-    private EntryRotor entryRotor;
-    private LinkedList<Rotor> rotors;
-    private Reflector reflector;
+    private final Language language;
+    private final Commutator commutator;
+    private final EntryRotor entryRotor;
+    private final LinkedList<Rotor> rotors;
+    private final Reflector reflector;
 
     public Enigma() {
         this(new Language(LanguageAlphabet.EN), 3);
@@ -23,7 +22,7 @@ public class Enigma {
 
     public Enigma(Language language, int rotorCount) {
         if (rotorCount > 100) {
-            rotorCount = 15;
+            rotorCount = 100;
         }
         this.language = language;
         rotors = new LinkedList<>();
@@ -32,7 +31,7 @@ public class Enigma {
 
         entryRotor = new EntryRotor(language);
 
-        for (int i = 0; i < rotorCount; i ++) {
+        for (int i = 0; i < rotorCount; i++) {
             rotors.add(new Rotor(language));
         }
 
@@ -122,24 +121,6 @@ public class Enigma {
         return builder.toString();
     }
 
-    public String getRotorsState() {
-        StringBuilder rotorBuilder = new StringBuilder("Rotors state:" + System.lineSeparator());
-        int rotorCount = 1;
-
-        StringBuilder delimiter = new StringBuilder();
-        StringBuilder stateBuilder = new StringBuilder();
-
-        for (Rotor rotor : rotors) {
-            rotorBuilder.append(rotorCount++).append("|");
-            delimiter.append("--");
-            stateBuilder.append(rotor.getTurnState()).append("|");
-        }
-
-        return rotorBuilder.append(System.lineSeparator())
-                .append(delimiter.append(System.lineSeparator()))
-                .append(stateBuilder).toString();
-    }
-
     public String exportState() {
         StringBuilder sb = new StringBuilder();
 
@@ -164,17 +145,6 @@ public class Enigma {
         sb.append(System.lineSeparator());
 
         return sb.toString();
-    }
-
-    public void importState() {
-        Scanner sc = new Scanner(System.in);
-        StringBuilder stringBuilder = new StringBuilder();
-
-        while (sc.hasNextLine()) {
-            stringBuilder.append(sc.nextLine());
-        }
-
-        importState(stringBuilder.toString());
     }
 
     public void importState(String state) {

@@ -6,11 +6,7 @@ import java.util.*;
 
 public final class Rotor extends AbstractRotor implements Turnable {
     private String turnoverState;
-    private static int MIN_TURNOVER_STATE_COUNT = 1;
-
-    private Rotor(Language language, int initState) {
-        super(language, initState);
-    }
+    private static final int MIN_TURNOVER_STATE_COUNT = 1;
 
     public Rotor(Language language) {
         super(language);
@@ -56,7 +52,7 @@ public final class Rotor extends AbstractRotor implements Turnable {
         turnoverState = stringBuilder.toString();
     }
 
-    protected void setTurnoverState(String turnoverState) {
+    private void setTurnoverState(String turnoverState) {
         if (turnoverState.length() > language.getSize()) {
             throw new IllegalArgumentException("Turnover letters size must be less than language size");
         }

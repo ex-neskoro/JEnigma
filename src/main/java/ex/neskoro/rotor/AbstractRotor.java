@@ -46,11 +46,6 @@ public abstract class AbstractRotor {
         this.movableList = new ArrayList<>(List.of(letters));
     }
 
-    private void appendLetter(StringBuilder builder, String s) {
-        builder.append(s);
-        builder.append(" ");
-    }
-
     public int getTurnState() {
         return turnState;
     }
@@ -121,6 +116,11 @@ public abstract class AbstractRotor {
         return "State: %d".formatted(turnState) +
                 System.lineSeparator() +
                 in.append(System.lineSeparator()).append(delimiter.append(System.lineSeparator())).append(out);
+    }
+
+    private void appendLetter(StringBuilder builder, String s) {
+        builder.append(s);
+        builder.append(" ");
     }
 
     public static ArrayList<Integer> generateRandomLettersIndexes(Language language, int lettersCount) {
