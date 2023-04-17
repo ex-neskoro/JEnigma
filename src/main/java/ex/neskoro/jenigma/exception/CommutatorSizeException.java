@@ -1,4 +1,4 @@
-package ex.neskoro.exception;
+package ex.neskoro.jenigma.exception;
 
 public class CommutatorSizeException extends RuntimeException {
     public CommutatorSizeException() {

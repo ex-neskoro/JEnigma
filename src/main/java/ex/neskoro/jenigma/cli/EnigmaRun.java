@@ -1,8 +1,8 @@
-package ex.neskoro.cli;
+package ex.neskoro.jenigma.cli;
 
-import ex.neskoro.Enigma;
-import ex.neskoro.language.Language;
-import ex.neskoro.language.LanguageAlphabet;
+import ex.neskoro.jenigma.Enigma;
+import ex.neskoro.jenigma.language.Language;
+import ex.neskoro.jenigma.language.LanguageAlphabet;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

@@ -1,7 +1,7 @@
-package ex.neskoro.rotor;
+package ex.neskoro.jenigma.rotor;
 
-import ex.neskoro.language.Language;
-import ex.neskoro.language.LanguageAlphabet;
+import ex.neskoro.jenigma.language.Language;
+import ex.neskoro.jenigma.language.LanguageAlphabet;
 
 import java.util.ArrayList;
 import java.util.Arrays;

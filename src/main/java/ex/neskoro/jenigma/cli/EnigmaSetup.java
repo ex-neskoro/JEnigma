@@ -1,4 +1,4 @@
-package ex.neskoro.cli;
+package ex.neskoro.jenigma.cli;
 
 import picocli.CommandLine.Command;
 

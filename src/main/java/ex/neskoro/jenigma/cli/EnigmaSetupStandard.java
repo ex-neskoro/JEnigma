@@ -1,12 +1,12 @@
-package ex.neskoro.cli;
+package ex.neskoro.jenigma.cli;
 
-import ex.neskoro.Enigma;
-import ex.neskoro.language.Language;
-import ex.neskoro.language.LanguageAlphabet;
-import ex.neskoro.rotor.RotorFabric;
-import ex.neskoro.rotor.StandardEntryRotorType;
-import ex.neskoro.rotor.StandardReflectorType;
-import ex.neskoro.rotor.StandardRotorType;
+import ex.neskoro.jenigma.Enigma;
+import ex.neskoro.jenigma.language.Language;
+import ex.neskoro.jenigma.language.LanguageAlphabet;
+import ex.neskoro.jenigma.rotor.RotorFabric;
+import ex.neskoro.jenigma.rotor.StandardEntryRotorType;
+import ex.neskoro.jenigma.rotor.StandardReflectorType;
+import ex.neskoro.jenigma.rotor.StandardRotorType;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

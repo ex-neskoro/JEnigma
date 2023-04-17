@@ -1,4 +1,4 @@
-package ex.neskoro.rotor;
+package ex.neskoro.jenigma.rotor;
 
 public enum StandardEntryRotorType {
     ETW_GR("QWERTZUIOASDFGHJKPYXCVBNML"),

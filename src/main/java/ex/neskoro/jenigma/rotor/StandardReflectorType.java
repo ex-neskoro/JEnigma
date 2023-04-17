@@ -1,4 +1,4 @@
-package ex.neskoro.rotor;
+package ex.neskoro.jenigma.rotor;
 
 public enum StandardReflectorType {
     UKW_GR("QYHOGNECVPUZTFDJAXWMKISRBL"),

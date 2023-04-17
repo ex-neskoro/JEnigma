@@ -1,6 +1,6 @@
-import ex.neskoro.Enigma;
-import ex.neskoro.language.Language;
-import ex.neskoro.language.LanguageAlphabet;
+import ex.neskoro.jenigma.Enigma;
+import ex.neskoro.jenigma.language.Language;
+import ex.neskoro.jenigma.language.LanguageAlphabet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

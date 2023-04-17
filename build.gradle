@@ -29,7 +29,7 @@ compileJava {
 jar {
     manifest {
         attributes(
-            'Main-Class': 'ex.neskoro.cli.Main'
+            'Main-Class': 'ex.neskoro.jenigma.cli.Main'
         )
     }
     from {

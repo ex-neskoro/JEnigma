@@ -1,4 +1,4 @@
-package ex.neskoro.rotor;
+package ex.neskoro.jenigma.rotor;
 
 // reference - https://en.wikipedia.org/wiki/Enigma_rotor_details
 public enum StandardRotorType {

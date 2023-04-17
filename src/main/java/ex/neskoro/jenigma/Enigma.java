@@ -1,10 +1,10 @@
-package ex.neskoro;
+package ex.neskoro.jenigma;
 
-import ex.neskoro.language.Language;
-import ex.neskoro.language.LanguageAlphabet;
-import ex.neskoro.rotor.EntryRotor;
-import ex.neskoro.rotor.Reflector;
-import ex.neskoro.rotor.Rotor;
+import ex.neskoro.jenigma.language.Language;
+import ex.neskoro.jenigma.language.LanguageAlphabet;
+import ex.neskoro.jenigma.rotor.EntryRotor;
+import ex.neskoro.jenigma.rotor.Reflector;
+import ex.neskoro.jenigma.rotor.Rotor;
 
 import java.util.Iterator;
 import java.util.LinkedList;

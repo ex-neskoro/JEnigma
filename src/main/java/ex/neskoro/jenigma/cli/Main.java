@@ -1,4 +1,4 @@
-package ex.neskoro.cli;
+package ex.neskoro.jenigma.cli;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -6,7 +6,7 @@ import picocli.CommandLine.ScopeType;
 
 import java.util.concurrent.Callable;
 
-@Command(name = "jenigma",
+@Command(name = "ex/neskoro/jenigma",
         scope = ScopeType.INHERIT,
         mixinStandardHelpOptions = true,
         version = {"jenigma 1.0", "ex.neskoro©", "2023"},

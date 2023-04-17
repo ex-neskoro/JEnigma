@@ -1,4 +1,4 @@
-package ex.neskoro.language;
+package ex.neskoro.jenigma.language;
 
 public enum LanguageAlphabet {
     // russian

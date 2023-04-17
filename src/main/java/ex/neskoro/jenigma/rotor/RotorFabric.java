@@ -1,4 +1,4 @@
-package ex.neskoro.rotor;
+package ex.neskoro.jenigma.rotor;
 
 public class RotorFabric {
     public static Rotor getRotor(StandardRotorType type) {

@@ -1,8 +1,8 @@
-import ex.neskoro.Commutator;
-import ex.neskoro.language.Language;
-import ex.neskoro.language.LanguageAlphabet;
-import ex.neskoro.rotor.EntryRotor;
-import ex.neskoro.rotor.Rotor;
+import ex.neskoro.jenigma.Commutator;
+import ex.neskoro.jenigma.language.Language;
+import ex.neskoro.jenigma.language.LanguageAlphabet;
+import ex.neskoro.jenigma.rotor.EntryRotor;
+import ex.neskoro.jenigma.rotor.Rotor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

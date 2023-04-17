@@ -1,8 +1,8 @@
-package ex.neskoro;
+package ex.neskoro.jenigma;
 
-import ex.neskoro.exception.CommutatorSizeException;
-import ex.neskoro.language.Language;
-import ex.neskoro.rotor.AbstractRotor;
+import ex.neskoro.jenigma.exception.CommutatorSizeException;
+import ex.neskoro.jenigma.language.Language;
+import ex.neskoro.jenigma.rotor.AbstractRotor;
 
 import java.util.*;
 
